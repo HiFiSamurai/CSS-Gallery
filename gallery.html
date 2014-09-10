@@ -1,0 +1,145 @@
+<!DOCTYPE HTML>
+<html lang="en">
+    <head>
+        <meta http-equiv='X-UA-Compatible' content='IE=8; IE=10; chrome=1' />
+        <meta http-equiv='content-type' content='text-html; charset=utf-8' />
+        <link href='http://fonts.googleapis.com/css?family=Didact+Gothic' rel='stylesheet' type='text/css'>
+        <title>Design Gallery</title>
+        <style>
+            *               { font-family: 'Didact Gothic', sans-serif; text-rendering: optimizeLegibility; -webkit-font-smoothing: antialiased; }
+            body            { margin: 0; }
+            .color-red      { background: #cd4436; }
+            .color-green    { background: #2ac56c; }
+            .color-blue     { background: #0e83cd; }
+            .color-purple   { background: #9e487f; }
+            .color-yellow   { background: #f19f0f; }
+
+            .gallerySection     { padding: 30px; height: 100px; border-bottom: 4px solid #F63; }
+            .gallerySection h2  { text-transform: uppercase; color: #FFF; display: inline; }
+            .sectionBox         { display: table; margin: 0 auto; }
+
+            /* Tabs */            
+            .tabGroup           { padding: 5px; }
+            .tabGroup input     { display: none; }
+            .tabGroup li        { display: inline; }
+            .tabGroup label     { display: inline-block; width: 80px; padding: 10px; margin: 0; cursor: pointer; border-top: 2px solid #17B;
+                text-align: center; text-transform: uppercase; color: #17B; transition: color 0.3s, background-position 0.3s; 
+                background: linear-gradient(to bottom, #17B 50%, #FFF 50%); background-size: 100% 200%; background-position:left bottom;
+                -moz-user-select: -moz-none; -khtml-user-select: none; -webkit-user-select: none; -ms-user-select: none; user-select: none;
+            }
+
+            .tabGroup input:checked + label        { color: #FFF; background-position: left top; cursor: default; }
+
+            /*Some experimental side/top bar stuff*/
+            /* .tabGroup li:before { content: ""; position: absolute; top: 0; left: 0; width: 100%; height: 2px; background: #17B; transition: top 0.3s; }
+            .tabGroup li:after  { content: ""; position: absolute; top: 0; left: 0; width: 2px; height: 0;  background: #17B; transition: height 0.3s; }
+            
+            .tabGroup li.selectedTab:before { top: 100%; }
+            .tabGroup li.selectedTab:after  { height: 100%; } */
+
+
+
+            /* Dropdowns */
+            .dropWrapper    { position: relative; width: 150px; border: 2px solid #17B; background-color: #FFF; color: #17B; }
+            .dropLabel      { margin: 0; width: 100%; box-shadow: none; border: none; outline: none; line-height: 24px; cursor: pointer;
+                              background-color: #FFF; color: #17B; text-align: left; text-transform: uppercase; font-weight: 600;
+                              -moz-user-select: -moz-none; -khtml-user-select: none; -webkit-user-select: none; -ms-user-select: none; user-select: none; }
+            .dropArrow      { position: absolute; top: 9px; right: 5px; width: 0px; height: 0px; transform: rotate(0); transition: transform 0.3s;
+                              border-bottom: 5px solid transparent; border-left: 8px solid #17B; border-top: 5px solid transparent; }
+            
+            .dropOptions    { margin: 0; padding: 0; max-height: 120px; overflow-y: auto; overflow-x: hidden; }
+            .dropOptions li { cursor: pointer; padding: 0 5px; height: 0; width: 100%; line-height: 30px; overflow: hidden; opacity: 0; transition: height 0.3s, opacity 0.5s; }
+
+            .dropOptions li.selectedOption      { color: #FFF; background: #17B; }
+            .dropOptions li:not(.selectedOption):hover { background: #CEF; }
+
+            .dropLabel:focus ~ .dropOptions li  { height: 30px; opacity: 1; width: 100%; }
+            .dropLabel:focus .dropArrow         { transform: rotate(90deg); }
+
+
+            /* Spinners */
+            .loadingBox li  { display: inline-block; margin-right: 30px; }
+            .loadingSpinner { width: 24px; height: 24px; border: 4px solid #F63; border-radius: 50%;  border-left-color: transparent; display: block; -webkit-animation: spin 1s infinite steps(60); transition: rotate 0.3s; }
+            @-webkit-keyframes spin { to { transform: rotate(1turn); } }
+
+            .loadingDots, .loadingDots:before, .loadingDots:after { display: inline-block; width: 18px; height: 18px; border-radius: 50%; background-color: #F63; }
+            .loadingDots        { margin-right: 60px; position: relative; -webkit-animation: dotFade 4s infinite ease-in-out; }
+            .loadingDots:before { content: ""; position: absolute; left: 24px; -webkit-animation: dotFade 4s infinite ease-in-out;}
+            .loadingDots:after  { content: ""; position: absolute; left: 48px; -webkit-animation: dotFade 4s infinite ease-in-out;}
+            @-webkit-keyframes dotFade {
+                0%, 50%, 100% { opacity: 0; }
+                25%, 75% { opacity: 1; }
+            }
+
+
+            /* Buttons */
+            .push-button, .push-group label        { padding: 5px 10px; display: inline-block; position: relative;
+                                  color: #FFF; background: #D42; box-shadow: 3px 3px 3px #B52C0E; border: 1px solid #D42; border-radius: 3px; 
+                                  text-align: center; text-transform: uppercase; font-weight: 600; cursor: pointer;
+                                  transition: box-shadow 0.1s, left 0.1s, top 0.1s; 
+                                  -moz-user-select: -moz-none; -khtml-user-select: none; -webkit-user-select: none; -ms-user-select: none; user-select: none;}
+            .push-button:hover  { box-shadow: 2px 2px 2px #B52C0E; top: 1px; left: 1px; }
+            .push-button:active, .push-group input:checked + label { box-shadow: 0 0 0 #B52C0E; top: 3px; left: 3px; }
+
+            .push-group         { display: inline-block; vertical-align: bottom; margin-left: 30px; }
+            .push-group input   { display: none; }
+            .push-group li      { display: inline; }
+            .push-group label   { width: 65px; margin: 0; border-color: #B52C0E; }
+
+        </style>
+    </head>
+    <body class="color-yellow">
+
+    <!-- Tab Controls -->
+    <script type="text/javascript" src="../../../../steal/steal.js?plugins/firmex/app"></script>
+    <div class="gallerySection color-purple">
+        <h2>Flat Tabs</h2>
+        <ul class="tabGroup sectionBox">
+            <li><input type="radio" id="tab1" name="tabGroup" checked><label for="tab1">Tab 1</label></li>
+            <li><input type="radio" id="tab2" name="tabGroup"><label for="tab2">Tab 2</label></li>
+            <li><input type="radio" id="tab3" name="tabGroup"><label for="tab3">Tab 3</label></li>
+            <li><input type="radio" id="tab4" name="tabGroup"><label for="tab4">Tab 4</label></li>
+        </ul>
+        <div class="tabContent"></div>
+    </div>
+
+    <!-- Dropdown Controls -->
+    <div class="gallerySection color-green">
+        <h2>Dropdown</h2>
+        <div class="dropWrapper sectionBox">
+            <button class="dropLabel" type="text">
+                <span>Select...</span>
+                <span class="dropArrow"></span>
+            </button>
+            <ul class="dropOptions">
+                <li>Option 1</li>
+                <li>Option 2</li>
+                <li>Option 3</li>
+                <li>Option 4</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="gallerySection color-red">
+        <h2>Loading Items</h2>
+        <ul class="loadingBox sectionBox">
+            <li><span class="loadingSpinner"></span></li>
+            <li><span class="loadingDots m10b"></span></li>
+        </ul>
+    </div>
+
+    <div class="gallerySection color-blue">
+        <h2>Push Buttons</h2>
+        <ul class="sectionBox">
+            <span class="push-button">Click Me!</span>
+
+            <ul class="push-group">
+                <li><input type="radio" id="type1" name="pushGroup"><label for="type1">Type 1</label></li><!--
+                --><li><input type="radio" id="type2" name="pushGroup"><label for="type2">Type 2</label></li><!--
+                --><li><input type="radio" id="type3" name="pushGroup"><label for="type3">Type 3</label></li>
+            </ul>
+        </ul>
+    </div>
+
+    </body>
+</html>
