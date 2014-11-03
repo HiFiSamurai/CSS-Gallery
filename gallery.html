@@ -3,6 +3,7 @@
     <head>
         <meta http-equiv='X-UA-Compatible' content='IE=8; IE=10; chrome=1' />
         <meta http-equiv='content-type' content='text-html; charset=utf-8' />
+        <link rel="shortcut icon" href="favicon.ico"/>
         <link href='http://fonts.googleapis.com/css?family=Didact+Gothic' rel='stylesheet' type='text/css'>
         <title>Design Gallery</title>
         <style>
@@ -86,12 +87,27 @@
             .push-group li      { display: inline; }
             .push-group label   { width: 65px; margin: 0; border-color: #B52C0E; }
 
+            /* Toggle Switches */
+            .sectionBox .toggle + .toggle   { margin-left: 15px; }
+            .toggle                 { width: 48px; height: 24px; display: inline-block; }
+            .toggle input           { display: none; }
+
+            .toggle span            { display: inline-block; border-radius: 16px; border: 1px solid #39C; width: 100%;
+                                      -webkit-user-select: none; cursor: pointer;
+                                      background-image: linear-gradient(to left, #39C 50%, #F9F9F9 50%);
+                                      background-size: 200% 100%; background-position-x: -25%; transition: background-position-x 0.3s; }
+            .toggle span:before                     { content: ""; display: block; width: 22px; height: 22px; margin-left: -1px;
+                                                      border-radius: 50%; border: 1px solid #39C; background-color: #FFF; transition: margin-left 0.3s; }
+            .toggle input:checked + span            { background-position-x: -75%; }
+            .toggle input:checked + span:before     { margin-left: 25px; }
+
+            .toggle input:disabled + span           { cursor: not-allowed; border-color: #AAA; background-color: #EFEFEF; background-image: none; }
+            .toggle input:disabled + span:before    { border-color: #AAA; background-color: #F9F9F9; }
         </style>
     </head>
     <body class="color-yellow">
 
     <!-- Tab Controls -->
-    <script type="text/javascript" src="../../../../steal/steal.js?plugins/firmex/app"></script>
     <div class="gallerySection color-purple">
         <h2>Flat Tabs</h2>
         <ul class="tabGroup sectionBox">
@@ -141,5 +157,19 @@
         </ul>
     </div>
 
+    <div class="gallerySection color-yellow">
+        <h2>Toggle Switches</h2>
+        <div class="sectionBox">
+            <label class="toggle">
+                <input type="checkbox"><span></span>
+            </label>
+            <label class="toggle">
+                <input type="checkbox" checked><span></span>
+            </label>
+            <label class="toggle">
+                <input type="checkbox" disabled><span></span>
+            </label>
+        </div>
+    </div>
     </body>
 </html>
