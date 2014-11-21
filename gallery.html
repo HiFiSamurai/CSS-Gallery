@@ -41,7 +41,7 @@
 
 
             /* Dropdowns */
-            .dropWrapper    { position: relative; width: 150px; border: 2px solid #17B; background-color: #FFF; color: #17B; }
+            .dropWrapper    { position: relative; width: 150px; border: 2px solid #17B; border-radius: 3px; box-shadow: 1px 1px 1px #999; background-color: #FFF; color: #17B; }
             .dropLabel      { margin: 0; width: 100%; box-shadow: none; border: none; outline: none; line-height: 24px; cursor: pointer;
                               background-color: #FFF; color: #17B; text-align: left; text-transform: uppercase; font-weight: 600;
                               -moz-user-select: -moz-none; -khtml-user-select: none; -webkit-user-select: none; -ms-user-select: none; user-select: none; }
@@ -103,6 +103,11 @@
 
             .toggle input:disabled + span           { cursor: not-allowed; border-color: #AAA; background-color: #EFEFEF; background-image: none; }
             .toggle input:disabled + span:before    { border-color: #AAA; background-color: #F9F9F9; }
+
+            /* Text Prompt */
+            .fancyTxt           { background: #FFF url('txtLabel.png'); background-repeat: no-repeat; background-size: 225px;
+                                  background-position: 5px -50px; transition: background-position 0.3s; }
+            .fancyTxt:invalid:not(:focus)     { background-position-y: 0; }
         </style>
     </head>
     <body class="color-yellow">
@@ -169,6 +174,13 @@
             <label class="toggle">
                 <input type="checkbox" disabled><span></span>
             </label>
+        </div>
+    </div>
+
+    <div class="gallerySection color-purple">
+        <h2>Text Prompt</h2>
+        <div class="sectionBox">
+            <textarea name="testTxt" id="testTxt" class="fancyTxt" cols="50" rows="3" required></textarea>
         </div>
     </div>
     </body>
