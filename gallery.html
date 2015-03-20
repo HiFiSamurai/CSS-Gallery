@@ -19,6 +19,7 @@
             .gallerySection h2  { text-transform: uppercase; color: #FFF; display: inline; }
             .sectionBox         { display: table; margin: 0 auto; }
 
+
             /* Tabs */            
             .tabGroup           { padding: 5px; }
             .tabGroup input     { display: none; }
@@ -31,21 +32,13 @@
 
             .tabGroup input:checked + label        { color: #FFF; background-position: left top; cursor: default; }
 
-            /*Some experimental side/top bar stuff*/
-            /* .tabGroup li:before { content: ""; position: absolute; top: 0; left: 0; width: 100%; height: 2px; background: #17B; transition: top 0.3s; }
-            .tabGroup li:after  { content: ""; position: absolute; top: 0; left: 0; width: 2px; height: 0;  background: #17B; transition: height 0.3s; }
-            
-            .tabGroup li.selectedTab:before { top: 100%; }
-            .tabGroup li.selectedTab:after  { height: 100%; } */
-
-
 
             /* Dropdowns */
             .dropWrapper    { position: relative; width: 150px; border: 2px solid #17B; border-radius: 3px; box-shadow: 1px 1px 1px #999; background-color: #FFF; color: #17B; }
             .dropLabel      { margin: 0; width: 100%; box-shadow: none; border: none; outline: none; line-height: 24px; cursor: pointer;
                               background-color: #FFF; color: #17B; text-align: left; text-transform: uppercase; font-weight: 600;
                               -moz-user-select: -moz-none; -khtml-user-select: none; -webkit-user-select: none; -ms-user-select: none; user-select: none; }
-            .dropArrow      { position: absolute; top: 9px; right: 5px; width: 0px; height: 0px; transform: rotate(0); transition: transform 0.3s;
+            .dropLabel::after      { content: ""; position: absolute; top: 9px; right: 5px; width: 0px; height: 0px; transform: rotate(0); transition: transform 0.3s;
                               border-bottom: 5px solid transparent; border-left: 8px solid #17B; border-top: 5px solid transparent; }
             
             .dropOptions    { margin: 0; padding: 0; max-height: 120px; overflow-y: auto; overflow-x: hidden; }
@@ -55,7 +48,7 @@
             .dropOptions li:not(.selectedOption):hover { background: #CEF; }
 
             .dropLabel:focus ~ .dropOptions li  { height: 30px; opacity: 1; width: 100%; }
-            .dropLabel:focus .dropArrow         { transform: rotate(90deg); }
+            .dropLabel:focus::after         { transform: rotate(90deg); }
 
 
             /* Spinners */
@@ -67,6 +60,7 @@
             .loadingDots        { margin-right: 60px; position: relative; -webkit-animation: dotFade 4s infinite ease-in-out; }
             .loadingDots:before { content: ""; position: absolute; left: 24px; -webkit-animation: dotFade 4s infinite ease-in-out;}
             .loadingDots:after  { content: ""; position: absolute; left: 48px; -webkit-animation: dotFade 4s infinite ease-in-out;}
+            
             @-webkit-keyframes dotFade {
                 0%, 50%, 100% { opacity: 0; }
                 25%, 75% { opacity: 1; }
@@ -87,6 +81,22 @@
             .push-group li      { display: inline; }
             .push-group label   { width: 65px; margin: 0; border-color: #B52C0E; }
 
+            /* Overlay Effect */
+            html, body          { height: 100%; margin: 0; padding: 0; }
+            .mainContent        { height: 100%; overflow: auto; }
+
+            .overlayTarget      { visibility: hidden; color: #666; }
+            .cardBox            { border: 1px solid #DDD; background-color: #FFF; padding: 5px; cursor: pointer; display: inline-block;
+                                  width: 150px; min-height: 50px; margin-right: 15px; transition: min-height 300ms ease, width 300ms ease; }
+            .cardTitle          { text-align: center; }
+
+            .cardOverlay                                                { z-index: -1; opacity: 0; background-color: transparent; transition: all 300ms ease; position: fixed; top: 0; left: 0; right: 0; bottom: 0; overflow: auto; }
+            .cardOverlay.visible                                        { z-index: 100; opacity: 1; background-color: rgba(238, 238, 238,0.7); }
+            .cardOverlay.visible .overlayContent                        { transition: all 300ms ease; margin-left: 0; position: absolute; }
+            .cardOverlay.visible .overlayContent.active                 { left: 50% !important; top: 30px !important; margin-left: -300px; }
+            .cardOverlay.visible .overlayContent.active .cardBox        { width: 600px; min-height: 400px; cursor: default; box-shadow: 1px 1px 1px #CCC; }
+
+
             /* Toggle Switches */
             .sectionBox .toggle + .toggle   { margin-left: 15px; }
             .toggle                 { width: 48px; height: 24px; display: inline-block; }
@@ -104,14 +114,17 @@
             .toggle input:disabled + span           { cursor: not-allowed; border-color: #AAA; background-color: #EFEFEF; background-image: none; }
             .toggle input:disabled + span:before    { border-color: #AAA; background-color: #F9F9F9; }
 
+
             /* Text Prompt */
-            .fancyTxt           { background: #FFF url('txtLabel.png'); background-repeat: no-repeat; background-size: 225px;
-                                  background-position: 5px -50px; transition: background-position 0.3s; }
-            .fancyTxt:invalid:not(:focus)     { background-position-y: 0; }
+            .fancyTxt           { background: #FFF url('txtLabel.png'); padding: 5px; background-repeat: no-repeat; background-size: 225px;
+                                  background-position: 5px -50px; transition: background-position 0.3s; resize: none; }
+            .fancyTxt:invalid:not(:focus)     { background-position-y: 2px; }
         </style>
     </head>
     <body class="color-yellow">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 
+    <div class="mainContent">
     <!-- Tab Controls -->
     <div class="gallerySection color-purple">
         <h2>Flat Tabs</h2>
@@ -128,10 +141,7 @@
     <div class="gallerySection color-green">
         <h2>Dropdown</h2>
         <div class="dropWrapper sectionBox">
-            <button class="dropLabel" type="text">
-                <span>Select...</span>
-                <span class="dropArrow"></span>
-            </button>
+            <button class="dropLabel">Select...</button>
             <ul class="dropOptions">
                 <li>Option 1</li>
                 <li>Option 2</li>
@@ -163,6 +173,50 @@
     </div>
 
     <div class="gallerySection color-yellow">
+        <h2>Overlay Effect</h2>
+        <div class="sectionBox">
+            <div class="cardBox">
+                <h4 class="cardTitle">Some Item</h4>
+            </div>
+            <div class="cardBox">
+                <h4 class="cardTitle">Some Other Item</h4>
+            </div>
+        </div>
+        <div class="cardOverlay">
+            <div class="overlayContent"></div>
+        </div>
+        <script>
+            $(".cardBox").click(function (ev) {
+                var el = $(this);
+                var overlay = $(".cardOverlay")
+                var target = overlay.find(".overlayContent");
+                target.append(el.clone());                  // Copy contents into new box, which will undergo the transition
+                target.css(el.position());                  // Move box to starting position above original box
+                overlay.addClass("visible");
+
+                el.addClass("overlayTarget");
+                setTimeout(function () { target.addClass("active"); });     // Need to adjust properties in two steps, with slight delay after making visible
+            });
+
+            $(".cardOverlay").click(function (ev) {                 // TODO: Use alternate binding for remove when in controller context
+                var el = $(".overlayTarget");
+                if (!el.length) return;
+
+                var overlay = $(".cardOverlay")
+                var target = overlay.find(".overlayContent");
+                target.css(el.position());                  // Move overlayed box back to starting position
+                target.removeClass("active");
+                setTimeout(function () {                    // TODO: Listen on 'transitioned' events instead of hard-coded timeout
+                    el.removeClass("overlayTarget");
+                    overlay.removeClass("visible");
+                    target.empty();
+                    target.css({ top: "", left: "" });      // Reset position for proper transitioning after scrolling
+                }, 300);
+            });
+        </script>
+    </div>
+
+    <div class="gallerySection color-purple">
         <h2>Toggle Switches</h2>
         <div class="sectionBox">
             <label class="toggle">
@@ -177,11 +231,13 @@
         </div>
     </div>
 
-    <div class="gallerySection color-purple">
+    <div class="gallerySection color-green">
         <h2>Text Prompt</h2>
         <div class="sectionBox">
-            <textarea name="testTxt" id="testTxt" class="fancyTxt" cols="50" rows="3" required></textarea>
+            <textarea name="testTxt" id="testTxt" class="fancyTxt" cols="50" rows="1" required></textarea>
         </div>
+    </div>
+
     </div>
     </body>
 </html>

@@ -1,4 +1,4 @@
 CSS-Gallery
 ===========
 
-Some experiments to create pure CSS controls
+Some experiments to create (almost) pure CSS controls
