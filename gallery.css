@@ -131,6 +131,39 @@ ul                 { margin: 0; padding: 0; }
 .toggle input:disabled + span           { cursor: not-allowed; border-color: #AAA; background-color: #EFEFEF; background-image: none; }
 .toggle input:disabled + span:before    { border-color: #AAA; background-color: #F9F9F9; }
 
+/* Radio Buttons */
+.radioGroup {
+    position: relative;
+}
+
+.radio {
+    border: 2px solid #17B;
+    width: 22px;
+    height: 22px;
+    display: inline-block;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.radio + .radio {
+    margin-left: 15px;
+}
+
+.radio input {
+    display: none;
+}
+
+.radioDot {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background-color: #17B;
+    display: inline-block;
+    position: absolute;
+    top: 6px;
+    left: 6px;
+    transition: left 300ms, transform 100ms;
+}
 
 /* Text Prompt */
 .fancyTxt           { background: #FFF url('txtLabel.png'); padding: 10px; background-repeat: no-repeat; background-size: 225px;
